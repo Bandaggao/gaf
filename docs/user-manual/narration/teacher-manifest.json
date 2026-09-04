@@ -1,0 +1,60 @@
+{
+  "slug": "teacher",
+  "segments": [
+    {
+      "key": "intro",
+      "offsetMs": 1,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/000-intro.mp3",
+      "durationMs": 2289
+    },
+    {
+      "key": "login",
+      "offsetMs": 1604,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/001-login.mp3",
+      "durationMs": 1779
+    },
+    {
+      "key": "dashboard",
+      "offsetMs": 8802,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/002-dashboard.mp3",
+      "durationMs": 3893
+    },
+    {
+      "key": "sessions.view",
+      "offsetMs": 14691,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/003-sessions.view.mp3",
+      "durationMs": 2543
+    },
+    {
+      "key": "sessions.create",
+      "offsetMs": 15290,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/004-sessions.create.mp3",
+      "durationMs": 4990
+    },
+    {
+      "key": "sessions.qr",
+      "offsetMs": 28480,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/005-sessions.qr.mp3",
+      "durationMs": 5255
+    },
+    {
+      "key": "sessions.close",
+      "offsetMs": 33085,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/006-sessions.close.mp3",
+      "durationMs": 3496
+    },
+    {
+      "key": "profile",
+      "offsetMs": 41450,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/007-profile.mp3",
+      "durationMs": 2674
+    },
+    {
+      "key": "outro",
+      "offsetMs": 46156,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/teacher/008-outro.mp3",
+      "durationMs": 1868
+    }
+  ],
+  "output": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/videos/teacher-walkthrough-narrated.mp4"
+}

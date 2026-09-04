@@ -1,0 +1,13 @@
+{
+  "title": "Student Portal Walkthrough",
+  "voice": "Samantha",
+  "steps": {
+    "intro": "Welcome to the GAFS A-Watch Student portal.",
+    "login": "Sign in with your student email and password.",
+    "dashboard": "Your dashboard shows your personal attendance history.",
+    "scan": "Open Scan QR and point your phone camera at the session QR code shown by your teacher.",
+    "scan.done": "Attendance is recorded. Check your dashboard for the updated status.",
+    "profile": "Your profile shows your account information.",
+    "outro": "That completes the student walkthrough."
+  }
+}

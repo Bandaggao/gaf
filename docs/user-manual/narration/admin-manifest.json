@@ -1,0 +1,150 @@
+{
+  "slug": "admin",
+  "segments": [
+    {
+      "key": "intro",
+      "offsetMs": 2,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/000-intro.mp3",
+      "durationMs": 5168
+    },
+    {
+      "key": "login",
+      "offsetMs": 4059,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/001-login.mp3",
+      "durationMs": 3741
+    },
+    {
+      "key": "dashboard",
+      "offsetMs": 14424,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/002-dashboard.mp3",
+      "durationMs": 3437
+    },
+    {
+      "key": "blocks.view",
+      "offsetMs": 20345,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/003-blocks.view.mp3",
+      "durationMs": 4340
+    },
+    {
+      "key": "blocks.add",
+      "offsetMs": 23946,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/004-blocks.add.mp3",
+      "durationMs": 4155
+    },
+    {
+      "key": "blocks.edit",
+      "offsetMs": 35087,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/005-blocks.edit.mp3",
+      "durationMs": 4470
+    },
+    {
+      "key": "blocks.delete",
+      "offsetMs": 46612,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/006-blocks.delete.mp3",
+      "durationMs": 3158
+    },
+    {
+      "key": "subjects.view",
+      "offsetMs": 57064,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/007-subjects.view.mp3",
+      "durationMs": 3881
+    },
+    {
+      "key": "subjects.add",
+      "offsetMs": 60662,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/008-subjects.add.mp3",
+      "durationMs": 3352
+    },
+    {
+      "key": "subjects.edit",
+      "offsetMs": 70637,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/009-subjects.edit.mp3",
+      "durationMs": 2934
+    },
+    {
+      "key": "subjects.delete",
+      "offsetMs": 80170,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/010-subjects.delete.mp3",
+      "durationMs": 2202
+    },
+    {
+      "key": "teachers.view",
+      "offsetMs": 88557,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/011-teachers.view.mp3",
+      "durationMs": 3576
+    },
+    {
+      "key": "teachers.add",
+      "offsetMs": 92155,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/012-teachers.add.mp3",
+      "durationMs": 2922
+    },
+    {
+      "key": "teachers.edit",
+      "offsetMs": 103396,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/013-teachers.edit.mp3",
+      "durationMs": 2491
+    },
+    {
+      "key": "teachers.delete",
+      "offsetMs": 112856,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/014-teachers.delete.mp3",
+      "durationMs": 2329
+    },
+    {
+      "key": "students.view",
+      "offsetMs": 121262,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/015-students.view.mp3",
+      "durationMs": 3891
+    },
+    {
+      "key": "students.add",
+      "offsetMs": 127476,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/016-students.add.mp3",
+      "durationMs": 4768
+    },
+    {
+      "key": "students.edit",
+      "offsetMs": 144452,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/017-students.edit.mp3",
+      "durationMs": 2829
+    },
+    {
+      "key": "students.delete",
+      "offsetMs": 153928,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/018-students.delete.mp3",
+      "durationMs": 1853
+    },
+    {
+      "key": "classes.view",
+      "offsetMs": 162304,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/019-classes.view.mp3",
+      "durationMs": 3017
+    },
+    {
+      "key": "classes.add",
+      "offsetMs": 165884,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/020-classes.add.mp3",
+      "durationMs": 3597
+    },
+    {
+      "key": "enrollments.view",
+      "offsetMs": 176951,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/021-enrollments.view.mp3",
+      "durationMs": 4838
+    },
+    {
+      "key": "reports.view",
+      "offsetMs": 187504,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/022-reports.view.mp3",
+      "durationMs": 4326
+    },
+    {
+      "key": "outro",
+      "offsetMs": 196006,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/admin/023-outro.mp3",
+      "durationMs": 3238
+    }
+  ],
+  "output": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/videos/admin-walkthrough-narrated.mp4"
+}

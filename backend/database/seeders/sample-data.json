@@ -1,0 +1,183 @@
+{
+  "meta": {
+    "school": "Gamu Agri-Fishery School (GAFS)",
+    "school_year": "2025-2026",
+    "default_password": "password",
+    "description": "Realistic test dataset for GAFS A-Watch development, E2E testing, and demos."
+  },
+  "sections": [
+    { "key": "sec_g10_malunggay", "name": "Grade 10 - Malunggay", "grade_level": "10" },
+    { "key": "sec_g10_tilapia", "name": "Grade 10 - Tilapia", "grade_level": "10" },
+    { "key": "sec_g9_bamboo", "name": "Grade 9 - Bamboo", "grade_level": "9" },
+    { "key": "sec_g7_rice", "name": "Grade 7 - Rice", "grade_level": "7" }
+  ],
+  "subjects": [
+    { "key": "subj_agri", "name": "Agri-Fishery Technology" },
+    { "key": "subj_math", "name": "Mathematics" },
+    { "key": "subj_english", "name": "English" },
+    { "key": "subj_esp", "name": "ESP" },
+    { "key": "subj_tle", "name": "TLE" },
+    { "key": "subj_filipino", "name": "Filipino" }
+  ],
+  "users": [
+    { "key": "user_admin", "name": "Dr. Elena Santos", "email": "admin@gafs.edu.ph", "role": "admin" },
+    { "key": "user_teacher_maria", "name": "Maria Cruz", "email": "teacher@gafs.edu.ph", "role": "teacher" },
+    { "key": "user_teacher_reyes", "name": "Roberto Reyes", "email": "roberto.reyes@gafs.edu.ph", "role": "teacher" },
+    { "key": "user_teacher_garcia", "name": "Ana Garcia", "email": "ana.garcia@gafs.edu.ph", "role": "teacher" },
+    { "key": "user_student_juan", "name": "Juan Dela Cruz", "email": "student@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_maria", "name": "Maria Santos", "email": "maria.santos.student@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_pedro", "name": "Pedro Ramos", "email": "pedro.ramos@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_ana", "name": "Ana Villanueva", "email": "ana.villanueva@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_luis", "name": "Luis Mendoza", "email": "luis.mendoza@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_sofia", "name": "Sofia Torres", "email": "sofia.torres@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_miguel", "name": "Miguel Fernandez", "email": "miguel.fernandez@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_isabel", "name": "Isabel Aquino", "email": "isabel.aquino@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_diego", "name": "Diego Bautista", "email": "diego.bautista@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_carmen", "name": "Carmen Lopez", "email": "carmen.lopez@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_rafael", "name": "Rafael Navarro", "email": "rafael.navarro@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_elena", "name": "Elena Castillo", "email": "elena.castillo@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_jose", "name": "Jose Rivera", "email": "jose.rivera@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_patricia", "name": "Patricia Morales", "email": "patricia.morales@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_antonio", "name": "Antonio Gutierrez", "email": "antonio.gutierrez@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_becca", "name": "Rebecca Tan", "email": "rebecca.tan@gafs.edu.ph", "role": "student" },
+    { "key": "user_student_irregular", "name": "Carlo Irregular", "email": "carlo.irregular@gafs.edu.ph", "role": "student" },
+    { "key": "user_parent_maria", "name": "Maria Parent Dela Cruz", "email": "parent.delacruz@gafs.edu.ph", "role": "parent" },
+    { "key": "user_parent_pedro", "name": "Pedro Parent Ramos", "email": "parent.ramos@gafs.edu.ph", "role": "parent" },
+    { "key": "user_parent_ana", "name": "Ana Parent Villanueva", "email": "parent.villanueva@gafs.edu.ph", "role": "parent" },
+    { "key": "user_parent_sofia", "name": "Sofia Parent Torres", "email": "parent.torres@gafs.edu.ph", "role": "parent" },
+    { "key": "user_parent_demo", "name": "Demo Parent", "email": "parent@gafs.edu.ph", "role": "parent" }
+  ],
+  "teachers": [
+    { "key": "teacher_maria", "user_key": "user_teacher_maria", "section_keys": ["sec_g10_malunggay", "sec_g10_tilapia"] },
+    { "key": "teacher_reyes", "user_key": "user_teacher_reyes", "section_keys": ["sec_g9_bamboo", "sec_g7_rice"] },
+    { "key": "teacher_garcia", "user_key": "user_teacher_garcia", "section_keys": ["sec_g10_malunggay", "sec_g9_bamboo"] }
+  ],
+  "students": [
+    { "key": "student_juan", "user_key": "user_student_juan", "student_number": "GAFS-2026-001", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent.delacruz@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111101" },
+    { "key": "student_maria", "user_key": "user_student_maria", "student_number": "GAFS-2026-002", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent.delacruz@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111102" },
+    { "key": "student_pedro", "user_key": "user_student_pedro", "student_number": "GAFS-2026-003", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent.ramos@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111103" },
+    { "key": "student_ana", "user_key": "user_student_ana", "student_number": "GAFS-2026-004", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent.villanueva@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111104" },
+    { "key": "student_luis", "user_key": "user_student_luis", "student_number": "GAFS-2026-005", "grade_level": "10", "section_key": "sec_g10_tilapia", "student_type": "regular", "parent_email": "parent.torres@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111105" },
+    { "key": "student_sofia", "user_key": "user_student_sofia", "student_number": "GAFS-2026-006", "grade_level": "10", "section_key": "sec_g10_tilapia", "student_type": "regular", "parent_email": "parent.torres@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111106" },
+    { "key": "student_miguel", "user_key": "user_student_miguel", "student_number": "GAFS-2026-007", "grade_level": "9", "section_key": "sec_g9_bamboo", "student_type": "regular", "parent_email": "parent.ramos@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111107" },
+    { "key": "student_isabel", "user_key": "user_student_isabel", "student_number": "GAFS-2026-008", "grade_level": "9", "section_key": "sec_g9_bamboo", "student_type": "regular", "parent_email": "parent.villanueva@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111108" },
+    { "key": "student_diego", "user_key": "user_student_diego", "student_number": "GAFS-2026-009", "grade_level": "9", "section_key": "sec_g9_bamboo", "student_type": "regular", "parent_email": "parent.delacruz@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111109" },
+    { "key": "student_carmen", "user_key": "user_student_carmen", "student_number": "GAFS-2026-010", "grade_level": "7", "section_key": "sec_g7_rice", "student_type": "regular", "parent_email": "parent.torres@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111110" },
+    { "key": "student_rafael", "user_key": "user_student_rafael", "student_number": "GAFS-2026-011", "grade_level": "7", "section_key": "sec_g7_rice", "student_type": "regular", "parent_email": "parent.ramos@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111111" },
+    { "key": "student_elena", "user_key": "user_student_elena", "student_number": "GAFS-2026-012", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111112" },
+    { "key": "student_jose", "user_key": "user_student_jose", "student_number": "GAFS-2026-013", "grade_level": "10", "section_key": "sec_g10_malunggay", "student_type": "regular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111113" },
+    { "key": "student_patricia", "user_key": "user_student_patricia", "student_number": "GAFS-2026-014", "grade_level": "10", "section_key": "sec_g10_tilapia", "student_type": "regular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111114" },
+    { "key": "student_antonio", "user_key": "user_student_antonio", "student_number": "GAFS-2026-015", "grade_level": "9", "section_key": "sec_g9_bamboo", "student_type": "regular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111115" },
+    { "key": "student_becca", "user_key": "user_student_becca", "student_number": "GAFS-2026-016", "grade_level": "7", "section_key": "sec_g7_rice", "student_type": "regular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111116" },
+    { "key": "student_irregular", "user_key": "user_student_irregular", "student_number": "GAFS-2026-017", "grade_level": "10", "section_key": "sec_g10_tilapia", "student_type": "irregular", "parent_email": "parent@gafs.edu.ph", "qr_token": "11111111-1111-1111-1111-111111111117" }
+  ],
+  "parents": [
+    { "key": "parent_delacruz", "user_key": "user_parent_maria", "email": "parent.delacruz@gafs.edu.ph", "student_keys": ["student_juan", "student_maria", "student_diego"] },
+    { "key": "parent_ramos", "user_key": "user_parent_pedro", "email": "parent.ramos@gafs.edu.ph", "student_keys": ["student_pedro", "student_miguel", "student_rafael"] },
+    { "key": "parent_villanueva", "user_key": "user_parent_ana", "email": "parent.villanueva@gafs.edu.ph", "student_keys": ["student_ana", "student_isabel"] },
+    { "key": "parent_torres", "user_key": "user_parent_sofia", "email": "parent.torres@gafs.edu.ph", "student_keys": ["student_luis", "student_sofia", "student_carmen"] },
+    { "key": "parent_demo", "user_key": "user_parent_demo", "email": "parent@gafs.edu.ph", "student_keys": ["student_elena", "student_jose", "student_patricia", "student_antonio", "student_becca", "student_irregular"] }
+  ],
+  "teaching_assignments": [
+    { "key": "ta_maria_agri_g10m", "teacher_key": "teacher_maria", "subject_key": "subj_agri", "section_key": "sec_g10_malunggay" },
+    { "key": "ta_maria_math_g10m", "teacher_key": "teacher_maria", "subject_key": "subj_math", "section_key": "sec_g10_malunggay" },
+    { "key": "ta_maria_english_g10m", "teacher_key": "teacher_maria", "subject_key": "subj_english", "section_key": "sec_g10_malunggay" },
+    { "key": "ta_maria_agri_g10t", "teacher_key": "teacher_maria", "subject_key": "subj_agri", "section_key": "sec_g10_tilapia" },
+    { "key": "ta_maria_math_g10t", "teacher_key": "teacher_maria", "subject_key": "subj_math", "section_key": "sec_g10_tilapia" },
+    { "key": "ta_reyes_agri_g9", "teacher_key": "teacher_reyes", "subject_key": "subj_agri", "section_key": "sec_g9_bamboo" },
+    { "key": "ta_reyes_math_g9", "teacher_key": "teacher_reyes", "subject_key": "subj_math", "section_key": "sec_g9_bamboo" },
+    { "key": "ta_reyes_esp_g9", "teacher_key": "teacher_reyes", "subject_key": "subj_esp", "section_key": "sec_g9_bamboo" },
+    { "key": "ta_reyes_tle_g7", "teacher_key": "teacher_reyes", "subject_key": "subj_tle", "section_key": "sec_g7_rice" },
+    { "key": "ta_reyes_filipino_g7", "teacher_key": "teacher_reyes", "subject_key": "subj_filipino", "section_key": "sec_g7_rice" },
+    { "key": "ta_garcia_english_g10m", "teacher_key": "teacher_garcia", "subject_key": "subj_english", "section_key": "sec_g10_malunggay" },
+    { "key": "ta_garcia_esp_g10m", "teacher_key": "teacher_garcia", "subject_key": "subj_esp", "section_key": "sec_g10_malunggay" },
+    { "key": "ta_garcia_english_g9", "teacher_key": "teacher_garcia", "subject_key": "subj_english", "section_key": "sec_g9_bamboo" }
+  ],
+  "student_enrollments": [
+    { "student_key": "student_irregular", "teaching_assignment_key": "ta_maria_agri_g10m", "enrollment_type": "irregular" }
+  ],
+  "enrollment_rules": {
+    "auto_enroll_regular_by_section": true,
+    "description": "Regular students are auto-enrolled in all teaching assignments for their section. Explicit enrollments above add irregular cross-section enrollments."
+  },
+  "class_sessions": [
+    {
+      "key": "session_active",
+      "teacher_user_key": "user_teacher_maria",
+      "teaching_assignment_key": "ta_maria_agri_g10m",
+      "subject_key": "subj_agri",
+      "section_key": "sec_g10_malunggay",
+      "session_date": "relative:today",
+      "start_time": "relative:minus_30_min",
+      "end_time": "relative:plus_2_hours",
+      "session_qr_token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee01",
+      "expires_at": "relative:plus_2_hours",
+      "absent_processed": false,
+      "closed_at": null,
+      "note": "Active session for E2E scan tests (HP-07, EC-01)"
+    },
+    {
+      "key": "session_expired",
+      "teacher_user_key": "user_teacher_maria",
+      "teaching_assignment_key": "ta_maria_math_g10m",
+      "subject_key": "subj_math",
+      "section_key": "sec_g10_malunggay",
+      "session_date": "relative:yesterday",
+      "start_time": "08:00",
+      "end_time": "09:30",
+      "session_qr_token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee02",
+      "expires_at": "relative:yesterday_end",
+      "absent_processed": true,
+      "closed_at": null,
+      "note": "Expired session for EC-05 tests"
+    },
+    {
+      "key": "session_closed",
+      "teacher_user_key": "user_teacher_maria",
+      "teaching_assignment_key": "ta_maria_english_g10m",
+      "subject_key": "subj_english",
+      "section_key": "sec_g10_malunggay",
+      "session_date": "relative:today",
+      "start_time": "07:30",
+      "end_time": "09:00",
+      "session_qr_token": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee03",
+      "expires_at": "relative:plus_1_hour",
+      "absent_processed": false,
+      "closed_at": "relative:minus_1_hour",
+      "note": "Closed session for EC-06 and HP-09 tests"
+    }
+  ],
+  "attendance_records": [
+    {
+      "student_key": "student_juan",
+      "session_key": "session_closed",
+      "status": "present",
+      "scanned_at": "relative:minus_2_hours"
+    },
+    {
+      "student_key": "student_maria",
+      "session_key": "session_closed",
+      "status": "late",
+      "scanned_at": "relative:minus_90_min"
+    },
+    {
+      "student_key": "student_pedro",
+      "session_key": "session_expired",
+      "status": "absent",
+      "scanned_at": null
+    },
+    {
+      "student_key": "student_ana",
+      "session_key": "session_expired",
+      "status": "present",
+      "scanned_at": "relative:yesterday_morning"
+    }
+  ],
+  "legacy_logins": {
+    "description": "Backward-compatible emails used in README and existing docs",
+    "teacher@gafs.edu.ph": "user_teacher_maria",
+    "student@gafs.edu.ph": "user_student_juan",
+    "admin@gafs.edu.ph": "user_admin",
+    "parent@gafs.edu.ph": "user_parent_demo"
+  }
+}

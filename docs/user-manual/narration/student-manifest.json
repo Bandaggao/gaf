@@ -1,0 +1,48 @@
+{
+  "slug": "student",
+  "segments": [
+    {
+      "key": "intro",
+      "offsetMs": 0,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/000-intro.mp3",
+      "durationMs": 2324
+    },
+    {
+      "key": "login",
+      "offsetMs": 1369,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/001-login.mp3",
+      "durationMs": 2429
+    },
+    {
+      "key": "dashboard",
+      "offsetMs": 8511,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/002-dashboard.mp3",
+      "durationMs": 2744
+    },
+    {
+      "key": "scan",
+      "offsetMs": 10707,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/003-scan.mp3",
+      "durationMs": 4835
+    },
+    {
+      "key": "scan.done",
+      "offsetMs": 19496,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/004-scan.done.mp3",
+      "durationMs": 3886
+    },
+    {
+      "key": "profile",
+      "offsetMs": 26299,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/005-profile.mp3",
+      "durationMs": 2384
+    },
+    {
+      "key": "outro",
+      "offsetMs": 31016,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/student/006-outro.mp3",
+      "durationMs": 1902
+    }
+  ],
+  "output": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/videos/student-walkthrough-narrated.mp4"
+}

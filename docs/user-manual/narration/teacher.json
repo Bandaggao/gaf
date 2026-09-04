@@ -1,0 +1,15 @@
+{
+  "title": "Teacher Portal Walkthrough",
+  "voice": "Samantha",
+  "steps": {
+    "intro": "Welcome to the GAFS A-Watch Teacher portal.",
+    "login": "Sign in with your teacher account.",
+    "dashboard": "Your dashboard shows session statistics and recent attendance activity.",
+    "sessions.view": "The Sessions page lists all your class sessions.",
+    "sessions.create": "Click New Session, choose a class, set the date and time, then start the session.",
+    "sessions.qr": "Display this QR code on your projector. Students scan it with their phones to mark attendance.",
+    "sessions.close": "When class ends, click Close Session to stop new scans.",
+    "profile": "Your profile page shows your account details.",
+    "outro": "That completes the teacher walkthrough."
+  }
+}

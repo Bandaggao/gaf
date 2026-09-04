@@ -1,0 +1,10 @@
+{
+  "title": "Parent Portal Walkthrough",
+  "voice": "Samantha",
+  "steps": {
+    "intro": "Welcome to the GAFS A-Watch Parent portal.",
+    "login": "Sign in with your parent account.",
+    "dashboard": "View your children's attendance here. Each card shows present, absent, and late counts.",
+    "outro": "You will also receive email alerts when your child scans in or is marked absent."
+  }
+}

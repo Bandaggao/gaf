@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --app-bg: #f4f6fb;
+  --app-surface: #ffffff;
+  --app-border: rgba(15, 23, 42, 0.08);
+  --app-shadow: 0 1px 3px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.04);
+  --app-radius: 16px;
+}
+
+html,
+body,
+#app {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.v-application {
+  background: var(--app-bg) !important;
+}
+
+.app-main {
+  background: var(--app-bg);
+  min-height: 100vh;
+}
+
+.app-page {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.app-card {
+  border: 1px solid var(--app-border) !important;
+  border-radius: var(--app-radius) !important;
+  box-shadow: var(--app-shadow) !important;
+  background: var(--app-surface) !important;
+}
+
+.app-card--flat {
+  box-shadow: none !important;
+}
+
+.app-sidebar-brand {
+  padding: 20px 16px 12px;
+}
+
+.app-sidebar-brand__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.app-sidebar-brand__subtitle {
+  font-size: 0.78rem;
+  opacity: 0.72;
+}
+
+.app-nav .v-list-item {
+  margin-bottom: 4px;
+}
+
+.app-nav .v-list-item--active {
+  background: rgba(var(--v-theme-primary), 0.1) !important;
+  color: rgb(var(--v-theme-primary)) !important;
+  font-weight: 600;
+}
+
+.app-topbar {
+  border-bottom: 1px solid var(--app-border);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.88) !important;
+}
+
+.login-bg {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(21, 101, 192, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(46, 125, 50, 0.1), transparent 24%),
+    var(--app-bg);
+}
+
+.login-card {
+  border: 1px solid var(--app-border);
+  border-radius: 24px !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08) !important;
+}
+
+.glass-chip {
+  backdrop-filter: blur(8px);
+}

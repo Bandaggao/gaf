@@ -1,0 +1,30 @@
+{
+  "slug": "parent",
+  "segments": [
+    {
+      "key": "intro",
+      "offsetMs": 0,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/parent/000-intro.mp3",
+      "durationMs": 2266
+    },
+    {
+      "key": "login",
+      "offsetMs": 1391,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/parent/001-login.mp3",
+      "durationMs": 1744
+    },
+    {
+      "key": "dashboard",
+      "offsetMs": 8539,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/parent/002-dashboard.mp3",
+      "durationMs": 5194
+    },
+    {
+      "key": "outro",
+      "offsetMs": 15747,
+      "audioPath": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/narration/.generated/parent/003-outro.mp3",
+      "durationMs": 4160
+    }
+  ],
+  "output": "/Users/bandaggao/Desktop/projects/gaf/gafs-awatch/docs/user-manual/videos/parent-walkthrough-narrated.mp4"
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Admin Portal Walkthrough",
+  "voice": "Samantha",
+  "steps": {
+    "intro": "Welcome to GAFS A-Watch. This is the Administration portal for Gamu Agri-Fishery School.",
+    "login": "Sign in with your admin email and password, then click Sign In.",
+    "dashboard": "The dashboard shows school-wide attendance statistics and charts.",
+    "blocks.view": "Program Blocks are home sections for students, such as Grade 10 Malunggay.",
+    "blocks.add": "Click Add Program Block, enter the block name and year level, then save.",
+    "blocks.edit": "To edit a block, click the pencil icon, update the name, and save.",
+    "blocks.delete": "To delete a block, click the delete icon and confirm.",
+    "subjects.view": "Subjects are courses like Mathematics or Agri-Fishery Technology.",
+    "subjects.add": "Add a new subject by clicking Add Subject and entering the name.",
+    "subjects.edit": "Edit a subject using the pencil icon on its row.",
+    "subjects.delete": "Remove a subject with the delete icon.",
+    "teachers.view": "The Teachers page lists all teacher accounts and their assigned classes.",
+    "teachers.add": "Add a teacher with name, email, and password.",
+    "teachers.edit": "Update a teacher's name using the edit dialog.",
+    "teachers.delete": "Delete a teacher account when they leave the school.",
+    "students.view": "Students are listed with their number, section, and enrollment count.",
+    "students.add": "Add a student with personal details, home program block, and parent email.",
+    "students.edit": "Edit student information using the pencil icon.",
+    "students.delete": "Delete a student record when needed.",
+    "classes.view": "Classes link teachers to subjects and program blocks.",
+    "classes.add": "Click Assign Classes to add subject and block pairs for a teacher.",
+    "enrollments.view": "Enrollments connect students to their classes. Select a student to manage enrollments.",
+    "reports.view": "Reports let you filter attendance by date range and export a PDF summary.",
+    "outro": "That completes the admin walkthrough. Thank you for watching."
+  }
+}
