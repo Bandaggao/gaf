@@ -1,12 +1,17 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { getGateKey, setGateKey, clearGateKey, scanGateToken } from '@/api/gate'
+import QrScanner from '@/components/QrScanner.vue'
+
+const MODE_KEY = 'gafs_gate_scan_mode'
 
 const gateKeyInput = ref('')
 const configured = ref(!!getGateKey())
+const scanMode = ref(localStorage.getItem(MODE_KEY) === 'camera' ? 'camera' : 'usb')
 const scanInput = ref('')
 const scanInputEl = ref(null)
 const submitting = ref(false)
+const cameraActive = ref(true)
 const result = ref(null)
 const recent = ref([])
 const clock = ref(new Date())
@@ -14,6 +19,8 @@ const clock = ref(new Date())
 let resultTimer = null
 let clockTimer = null
 let focusTimer = null
+
+const isCameraMode = computed(() => scanMode.value === 'camera')
 
 const resultTone = computed(() => {
   if (!result.value) return 'idle'
@@ -30,7 +37,11 @@ const resultTitle = computed(() => {
 })
 
 const resultMessage = computed(() => {
-  if (!result.value) return 'Point the student QR at the scanner'
+  if (!result.value) {
+    return isCameraMode.value
+      ? 'Hold the student QR in front of the laptop camera'
+      : 'Point the student QR at the USB scanner'
+  }
   return result.value.message || ''
 })
 
@@ -39,7 +50,9 @@ function saveKey() {
   if (!key) return
   setGateKey(key)
   configured.value = true
-  nextTick(focusScanInput)
+  nextTick(() => {
+    if (!isCameraMode.value) focusScanInput()
+  })
 }
 
 function disconnect() {
@@ -48,26 +61,40 @@ function disconnect() {
   gateKeyInput.value = ''
   result.value = null
   recent.value = []
+  cameraActive.value = false
+}
+
+function setMode(mode) {
+  scanMode.value = mode
+  localStorage.setItem(MODE_KEY, mode)
+  result.value = null
+
+  if (mode === 'camera') {
+    cameraActive.value = true
+  } else {
+    cameraActive.value = false
+    nextTick(focusScanInput)
+  }
 }
 
 function focusScanInput() {
+  if (isCameraMode.value) return
   scanInputEl.value?.focus()
 }
 
-async function handleScanSubmit() {
-  const token = scanInput.value.trim()
-  scanInput.value = ''
-
-  if (!token || submitting.value) {
-    focusScanInput()
+async function processToken(token) {
+  const cleaned = String(token || '').trim()
+  if (!cleaned || submitting.value) {
+    if (!isCameraMode.value) focusScanInput()
     return
   }
 
   submitting.value = true
+  cameraActive.value = false
   if (resultTimer) clearTimeout(resultTimer)
 
   try {
-    const { data } = await scanGateToken(token)
+    const { data } = await scanGateToken(cleaned)
     showResult({
       status: data.status,
       message: data.message,
@@ -96,8 +123,17 @@ async function handleScanSubmit() {
     })
   } finally {
     submitting.value = false
-    focusScanInput()
   }
+}
+
+function handleUsbSubmit() {
+  const token = scanInput.value.trim()
+  scanInput.value = ''
+  processToken(token)
+}
+
+function handleCameraScan(token) {
+  processToken(token)
 }
 
 function showResult(payload) {
@@ -117,13 +153,22 @@ function showResult(payload) {
 
   resultTimer = setTimeout(() => {
     result.value = null
-    focusScanInput()
+    if (isCameraMode.value) {
+      cameraActive.value = true
+    } else {
+      focusScanInput()
+    }
   }, 3500)
 }
 
 function onWindowFocus() {
-  if (configured.value) focusScanInput()
+  if (configured.value && !isCameraMode.value) focusScanInput()
 }
+
+watch(isCameraMode, (camera) => {
+  if (!configured.value) return
+  cameraActive.value = camera && !result.value && !submitting.value
+})
 
 onMounted(() => {
   clockTimer = setInterval(() => {
@@ -131,13 +176,23 @@ onMounted(() => {
   }, 1000)
 
   focusTimer = setInterval(() => {
-    if (configured.value && document.activeElement !== scanInputEl.value) {
+    if (
+      configured.value &&
+      !isCameraMode.value &&
+      document.activeElement !== scanInputEl.value
+    ) {
       focusScanInput()
     }
   }, 1500)
 
   window.addEventListener('focus', onWindowFocus)
-  nextTick(focusScanInput)
+  nextTick(() => {
+    if (configured.value && isCameraMode.value) {
+      cameraActive.value = true
+    } else {
+      focusScanInput()
+    }
+  })
 })
 
 onUnmounted(() => {
@@ -157,7 +212,7 @@ onUnmounted(() => {
         <h1>Connect scanner laptop</h1>
         <p>
           Enter the <strong>GATE_SCANNER_KEY</strong> from the backend
-          <code>.env</code> file. This laptop will keep the key and stay ready for USB QR scans.
+          <code>.env</code> file. Use a USB scanner or the laptop camera if hardware is unavailable.
         </p>
 
         <v-text-field
@@ -175,7 +230,7 @@ onUnmounted(() => {
         </v-btn>
 
         <p class="hint">
-          Tip: open this page fullscreen, plug in the USB scanner, then scan student phones.
+          Tip: open this page fullscreen. Switch between USB and Camera after starting.
         </p>
       </div>
     </div>
@@ -191,7 +246,21 @@ onUnmounted(() => {
             {{ clock.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) }}
           </div>
         </div>
-        <v-btn variant="text" color="inherit" size="small" @click="disconnect">Disconnect</v-btn>
+
+        <div class="header-actions">
+          <v-btn-toggle
+            :model-value="scanMode"
+            mandatory
+            density="comfortable"
+            color="primary"
+            class="mode-toggle"
+            @update:model-value="setMode"
+          >
+            <v-btn value="usb" prepend-icon="mdi-barcode-scan">USB</v-btn>
+            <v-btn value="camera" prepend-icon="mdi-camera-outline">Camera</v-btn>
+          </v-btn-toggle>
+          <v-btn variant="text" color="inherit" size="small" @click="disconnect">Disconnect</v-btn>
+        </div>
       </header>
 
       <main class="gate-main">
@@ -204,7 +273,9 @@ onUnmounted(() => {
                   ? 'mdi-information'
                   : resultTone === 'error'
                     ? 'mdi-close-circle'
-                    : 'mdi-qrcode-scan'
+                    : isCameraMode
+                      ? 'mdi-camera-outline'
+                      : 'mdi-qrcode-scan'
             }}
           </v-icon>
 
@@ -216,13 +287,19 @@ onUnmounted(() => {
             <div class="student-number">{{ result.student_number }}</div>
           </template>
 
-          <div v-else-if="!result" class="waiting-pulse">Waiting for next scan…</div>
+          <div v-else-if="!result && !isCameraMode" class="waiting-pulse">Waiting for next scan…</div>
 
           <v-progress-circular v-if="submitting" indeterminate color="white" class="mt-6" />
         </div>
 
+        <!-- Camera fallback -->
+        <div v-if="isCameraMode && !result" class="camera-panel">
+          <QrScanner :active="cameraActive && !submitting" @scan="handleCameraScan" />
+          <p class="camera-hint">Allow camera access when prompted. Aim at the student QR code.</p>
+        </div>
+
         <!-- Hidden input — USB scanners type here then press Enter -->
-        <form class="scan-trap" @submit.prevent="handleScanSubmit">
+        <form v-if="!isCameraMode" class="scan-trap" @submit.prevent="handleUsbSubmit">
           <input
             ref="scanInputEl"
             v-model="scanInput"
@@ -235,7 +312,7 @@ onUnmounted(() => {
         </form>
       </main>
 
-      <aside class="gate-recent" v-if="recent.length">
+      <aside v-if="recent.length" class="gate-recent">
         <h2>Recent scans</h2>
         <ul>
           <li v-for="(item, index) in recent" :key="`${item.at}-${index}`">
@@ -335,6 +412,19 @@ onUnmounted(() => {
   align-items: flex-start;
   gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.mode-toggle {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 12px;
 }
 
 .gate-clock {
@@ -347,6 +437,7 @@ onUnmounted(() => {
   flex: 1;
   display: grid;
   place-items: center;
+  gap: 24px;
   padding: 12px 0 24px;
 }
 
@@ -385,6 +476,21 @@ onUnmounted(() => {
   font-size: 1.15rem;
   opacity: 0.75;
   animation: pulse 1.8s ease-in-out infinite;
+}
+
+.camera-panel {
+  width: min(440px, 100%);
+}
+
+.camera-panel :deep(.app-card) {
+  background: rgba(255, 255, 255, 0.96) !important;
+}
+
+.camera-hint {
+  text-align: center;
+  margin-top: 12px;
+  opacity: 0.8;
+  font-size: 0.95rem;
 }
 
 @keyframes pulse {

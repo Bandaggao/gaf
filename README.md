@@ -120,10 +120,15 @@ Use a laptop at the school entrance with a USB QR scanner (keyboard-wedge type).
    ```
    (or your frontend tunnel / production URL + `/gate`)
 4. Enter the same `GATE_SCANNER_KEY` once — it is saved in the browser.
-5. Plug in the USB scanner, leave the page focused (fullscreen recommended).
-6. Student opens **My QR Code** on their phone → scanner beeps → Gate Station shows Welcome / Already recorded / Failed.
+5. Choose scan mode:
+   - **USB** — plug in a keyboard-wedge QR scanner (default)
+   - **Camera** — use the laptop webcam if no hardware scanner is available
+6. Student opens **My QR Code** on their phone → scan → Gate Station shows Welcome / Already recorded / Failed.
 
-**How it works:** the USB scanner types the QR text into a hidden field and presses Enter. The page then calls `POST /api/gate/scan`.
+**How it works:**
+- USB mode: the scanner types the QR text into a hidden field and presses Enter
+- Camera mode: the laptop camera reads the student QR via `html5-qrcode`
+- Both modes call `POST /api/gate/scan` with the same gate key
 
 | Status | Screen |
 |--------|--------|
