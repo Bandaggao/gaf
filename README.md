@@ -2,6 +2,8 @@
 
 Real-time attendance monitoring system for Gamu Agri-Fishery School.
 
+**Quick start (run + database only):** see [`SETUP.md`](SETUP.md).
+
 ## Project Structure
 
 ```
@@ -40,11 +42,7 @@ gafs-awatch/
 ```bash
 cd backend
 
-# Copy environment file and generate app key
-cp .env.example .env
-php artisan key:generate
-
-# Install PHP dependencies
+# Install PHP dependencies (.env is already in the repo)
 composer install
 
 # Run all migrations (creates SQLite DB at database/database.sqlite by default)
@@ -64,17 +62,37 @@ php artisan serve
 > php artisan migrate:fresh --seed
 > ```
 
-#### Background workers (optional for email alerts and scheduled jobs)
+#### Email alerts (SMTP)
 
-Open two extra terminal tabs:
+Parent emails are sent through Laravel Mail (SMTP). For Gmail, use an [App Password](https://myaccount.google.com/apppasswords) — see [`docs/GMAIL_SETUP.md`](docs/GMAIL_SETUP.md).
+
+In `backend/.env`:
+
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your@gmail.com
+MAIL_PASSWORD="your app password"
+MAIL_FROM_ADDRESS="your@gmail.com"
+MAIL_FROM_NAME="GAFS A-Watch"
+```
+
+Queued emails (gate arrival + absence) require a worker. Scheduled jobs need the scheduler:
 
 ```bash
-# Tab 2 — Process queued email jobs
+# Tab 2 — Process queued email jobs (required for parent alerts)
 php artisan queue:work
 
 # Tab 3 — Run scheduled commands (auto-mark absent after session expires)
 php artisan schedule:work
 ```
+
+| Event | When | Recipient |
+|-------|------|-----------|
+| Gate arrival | First successful gate scan of the day | `students.parent_email` |
+| Absence | Session finalized / expired, student absent | `students.parent_email` |
+| Weekly summary | Sunday 6 PM | Parent accounts |
 
 ---
 
@@ -83,11 +101,7 @@ php artisan schedule:work
 ```bash
 cd frontend
 
-# Copy environment file
-cp .env.example .env
-# Edit .env: set VITE_API_URL to your backend URL
-# Local:       VITE_API_URL=http://localhost:8000
-# Dev Tunnel:  VITE_API_URL=https://YOUR-BACKEND-TUNNEL-8000.asse.devtunnels.ms
+# .env is already in the repo (VITE_API_URL=http://localhost:8000)
 
 # Install JS dependencies
 npm install
@@ -124,17 +138,19 @@ Use a laptop at the school entrance with a USB QR scanner (keyboard-wedge type).
    - **USB** — plug in a keyboard-wedge QR scanner (default)
    - **Camera** — use the laptop webcam if no hardware scanner is available
 6. Student opens **My QR Code** on their phone → scan → Gate Station shows Welcome / Already recorded / Failed.
+7. On the first successful scan of the day, the backend queues a parent arrival email (`SendGateArrivalEmail`) to `students.parent_email` (requires `php artisan queue:work`).
 
 **How it works:**
 - USB mode: the scanner types the QR text into a hidden field and presses Enter
 - Camera mode: the laptop camera reads the student QR via `html5-qrcode`
 - Both modes call `POST /api/gate/scan` with the same gate key
+- Duplicate scans the same day return `already_scanned` and do **not** send another email
 
-| Status | Screen |
-|--------|--------|
-| `ok` | Green — Welcome + student name |
-| `already_scanned` | Amber — already recorded today |
-| `invalid` | Red — invalid or expired QR |
+| Status | Screen | Email |
+|--------|--------|-------|
+| `ok` | Green — Welcome + student name | Parent arrival email queued |
+| `already_scanned` | Amber — already recorded today | None |
+| `invalid` | Red — invalid or expired QR | None |
 
 Student QR tokens rotate every midnight.
 
@@ -158,12 +174,16 @@ Full test dataset (17 students, 3 teachers): [`docs/test-data/SAMPLE_DATA.md`](d
 ```
 Student shows QR on phone → Gate scanner reads it → Gate entry recorded (once/day)
                                                               ↓
+                                          Parent notified by email (first scan only)
+                                                              ↓
                                           Teacher opens session → sees who is at school
                                                               ↓
                                           Teacher marks absent anyone who missed class
                                                               ↓
                                           Teacher closes session → remaining students
                                           auto-finalized (at school = present, else absent)
+                                                              ↓
+                                          Absent students → parent absence email queued
 ```
 
 ---
@@ -172,7 +192,7 @@ Student shows QR on phone → Gate scanner reads it → Gate entry recorded (onc
 
 | Layer    | Technology |
 |----------|------------|
-| Backend  | Laravel 11, Sanctum, SQLite/MySQL, DomPDF, QR Code, Gmail API |
+| Backend  | Laravel 11, Sanctum, SQLite/MySQL, DomPDF, QR Code, Laravel Mail (SMTP) |
 | Frontend | Vue 3, Vuetify 3, Vue Router, Pinia, Axios, Chart.js |
 | Testing  | Playwright E2E |
 
@@ -192,6 +212,7 @@ npm run test:e2e:walkthrough  # user manual videos + screenshots
 
 | Document | Description |
 |----------|-------------|
+| [Setup / Run](SETUP.md) | Database + how to run the app |
 | [Developer Guide](docs/DEVELOPER_GUIDE.md) | Step-by-step onboarding |
 | [User Manual](docs/user-manual/README.md) | Screenshots + videos per role |
 | [Frontend](docs/FRONTEND.md) | Vue architecture |

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Gate;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendGateArrivalEmail;
 use App\Models\GateEntry;
 use App\Models\Student;
 use Illuminate\Http\JsonResponse;
@@ -57,6 +58,8 @@ class GateScanController extends Controller
             'scanned_at' => now(),
             'qr_token_used' => $token,
         ]);
+
+        SendGateArrivalEmail::dispatch($student, $entry);
 
         return response()->json([
             'status' => 'ok',

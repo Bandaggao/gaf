@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Jobs\SendAttendanceEmail;
+use App\Jobs\SendGateArrivalEmail;
 use App\Models\AttendanceRecord;
 use App\Models\ClassSession;
 use App\Models\GateEntry;
@@ -80,6 +81,8 @@ class AttendanceService
             'scanned_at' => now(),
             'qr_token_used' => $token,
         ]);
+
+        SendGateArrivalEmail::dispatch($student, $entry);
 
         return ['entry' => $entry, 'status' => 'ok', 'student' => $student];
     }

@@ -33,7 +33,8 @@ backend/
 │   │   ├── AttendanceService.php   # Core attendance logic
 │   │   └── GmailService.php        # Gmail API wrapper
 │   ├── Jobs/
-│   │   └── SendAttendanceEmail.php
+│   │   ├── SendAttendanceEmail.php
+│   │   └── SendGateArrivalEmail.php
 │   └── Console/Commands/
 │       ├── MarkAbsentCommand.php
 │       └── WeeklySummaryCommand.php
@@ -126,7 +127,11 @@ Location: `app/Services/AttendanceService.php`
 
 ### SendAttendanceEmail
 
-Dispatched when student scans in or is marked absent. Uses `GmailService` to send parent notification. Requires Gmail API credentials — see [`GMAIL_SETUP.md`](GMAIL_SETUP.md).
+Dispatched when a student is marked absent (session finalized). Uses `GmailService` to send parent notification. Recipient: `students.parent_email`. Requires SMTP or Gmail credentials — see [`GMAIL_SETUP.md`](GMAIL_SETUP.md).
+
+### SendGateArrivalEmail
+
+Dispatched by `GateScanController` (and `AttendanceService::recordGateEntry`) immediately after a new `gate_entries` row is created — i.e. the student's **first gate scan of the day**. Not dispatched on duplicate scans (`already_scanned`). Recipient: `students.parent_email`. Skipped silently if `parent_email` is empty.
 
 ### Scheduler (`routes/console.php`)
 
