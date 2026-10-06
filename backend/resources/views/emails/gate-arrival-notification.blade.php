@@ -18,7 +18,7 @@
 
     <ul>
         <li><strong>Date:</strong> {{ $entry->scan_date->format('F j, Y') }}</li>
-        <li><strong>Time:</strong> {{ \Carbon\Carbon::parse($entry->scanned_at)->format('h:i A') }}</li>
+        <li><strong>Time:</strong> {{ $entry->scanned_at->copy()->timezone('Asia/Manila')->format('h:i A') }}</li>
     </ul>
 
     <p>
