@@ -12,6 +12,10 @@ export function getDashboard() {
   return client.get('/admin/dashboard')
 }
 
+export function updateAdminProfile(data) {
+  return client.put('/admin/profile', data)
+}
+
 export function getStudents() {
   return client.get('/admin/students')
 }

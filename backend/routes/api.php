@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Api\Admin\EnrollmentController;
+use App\Http\Controllers\Api\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Api\Admin\ReportController;
 use App\Http\Controllers\Api\Admin\SectionController;
 use App\Http\Controllers\Api\Admin\StudentController;
@@ -32,6 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::middleware('role:admin')->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminDashboardController::class, 'index']);
+        Route::put('/profile', [AdminProfileController::class, 'update']);
 
         Route::apiResource('students', StudentController::class);
         Route::apiResource('teachers', TeacherController::class);

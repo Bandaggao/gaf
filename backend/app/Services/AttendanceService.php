@@ -130,14 +130,12 @@ class AttendanceService
     }
 
     // -------------------------------------------------------------------------
-    // Auto-finalize absent on session close
+    // Auto-finalize pending attendance when a session finishes
     // -------------------------------------------------------------------------
 
     /**
-     * When a session is closed, finalize attendance for all enrolled students
-     * that have no explicit record yet:
-     *  - gate entry today → present
-     *  - no gate entry    → absent
+    * When a session is closed or expires, mark enrolled students without an
+    * explicit attendance record as absent. Explicit records are preserved.
      */
     public function finalizeSessionAttendance(ClassSession $session): void
     {
@@ -145,13 +143,9 @@ class AttendanceService
             return;
         }
 
-        $sessionDate = $session->session_date->toDateString();
-
         $enrollments = StudentEnrollment::query()
             ->where('teaching_assignment_id', $session->teaching_assignment_id)
-            ->with(['student.gateEntries' => function ($q) use ($sessionDate) {
-                $q->whereDate('scan_date', $sessionDate);
-            }])
+            ->with('student')
             ->get();
 
         foreach ($enrollments as $enrollment) {
@@ -166,20 +160,14 @@ class AttendanceService
                 continue;
             }
 
-            $status = $student->gateEntries->isNotEmpty() ? 'present' : 'absent';
-
             $record = AttendanceRecord::create([
                 'student_id' => $student->id,
                 'class_session_id' => $session->id,
-                'status' => $status,
-                'scanned_at' => $status === 'present'
-                    ? $student->gateEntries->first()->scanned_at
-                    : null,
+                'status' => 'absent',
+                'scanned_at' => null,
             ]);
 
-            if ($status === 'absent') {
-                SendAttendanceEmail::dispatch($student, $session, 'absent');
-            }
+            SendAttendanceEmail::dispatch($student, $session, 'absent');
         }
 
         $session->update(['absent_processed' => true]);

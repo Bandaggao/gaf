@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getSession, closeSession, getSessionRoster, updateAttendance } from '@/api/teacher'
 import PageHeader from '@/components/ui/PageHeader.vue'
@@ -15,15 +15,23 @@ const roster = ref([])
 const rosterSummary = ref({})
 const markingStudentId = ref(null)
 const search = ref('')
+let expiryTimer = null
 
 const isActive = computed(() => session.value?.status === 'active')
 
-const rosterHeaders = [
-  { title: 'Student', key: 'student_name' },
-  { title: 'Gate Entry', key: 'gate_entry_today' },
-  { title: 'Attendance', key: 'attendance_status' },
-  { title: 'Actions', key: 'actions', sortable: false },
-]
+const rosterHeaders = computed(() => {
+  const headers = [
+    { title: 'Student', key: 'student_name' },
+    { title: 'Gate Entry', key: 'gate_entry_today' },
+    { title: 'Attendance', key: 'attendance_status' },
+  ]
+
+  if (isActive.value) {
+    headers.push({ title: 'Actions', key: 'actions', sortable: false })
+  }
+
+  return headers
+})
 
 const filteredRoster = computed(() => {
   const q = search.value.trim().toLowerCase()
@@ -55,6 +63,19 @@ async function loadSession() {
   try {
     const { data } = await getSession(route.params.id)
     session.value = data.data ?? data
+
+    if (expiryTimer) clearTimeout(expiryTimer)
+    const expiresAt = Date.parse(session.value?.expires_at ?? '')
+    if (session.value?.status === 'active' && Number.isFinite(expiresAt)) {
+      const timeUntilExpiry = expiresAt - Date.now()
+      if (timeUntilExpiry <= 0) {
+        session.value.status = 'expired'
+      } else {
+        expiryTimer = setTimeout(() => {
+          if (session.value?.status === 'active') session.value.status = 'expired'
+        }, timeUntilExpiry)
+      }
+    }
   } finally {
     loading.value = false
   }
@@ -72,6 +93,8 @@ async function loadRoster() {
 }
 
 async function markAttendance(student, status) {
+  if (!isActive.value) return
+
   markingStudentId.value = student.student_id
   try {
     await updateAttendance(route.params.id, {
@@ -98,6 +121,10 @@ async function handleClose() {
 onMounted(async () => {
   await loadSession()
   await loadRoster()
+})
+
+onUnmounted(() => {
+  if (expiryTimer) clearTimeout(expiryTimer)
 })
 </script>
 
@@ -236,22 +263,9 @@ onMounted(async () => {
               Mark Absent
             </v-btn>
 
-            <!-- Undo absent → present (only if gate entry exists) -->
+            <!-- Mark present for any student who is not already present -->
             <v-btn
-              v-if="item.attendance_status === 'absent' && item.gate_entry_today"
-              size="small"
-              color="success"
-              variant="tonal"
-              :loading="markingStudentId === item.student_id"
-              :disabled="markingStudentId !== null && markingStudentId !== item.student_id"
-              @click="markAttendance(item, 'present')"
-            >
-              Undo
-            </v-btn>
-
-            <!-- Mark present (only if not at school, no attendance yet) -->
-            <v-btn
-              v-if="!item.gate_entry_today && item.attendance_status !== 'present'"
+              v-if="item.attendance_status !== 'present'"
               size="small"
               color="success"
               variant="text"
@@ -299,4 +313,5 @@ onMounted(async () => {
   flex-direction: column;
   gap: 4px;
 }
+
 </style>

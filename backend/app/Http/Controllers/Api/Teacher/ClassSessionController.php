@@ -11,6 +11,7 @@ use App\Services\AttendanceService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ClassSessionController extends Controller
 {
@@ -91,6 +92,7 @@ class ClassSessionController extends Controller
             'session_date' => $validated['session_date'],
             'start_time' => $validated['start_time'],
             'end_time' => $validated['end_time'],
+            'session_qr_token' => (string) Str::uuid(),
             'expires_at' => $expiresAt,
             'absent_processed' => false,
         ]);
@@ -118,6 +120,10 @@ class ClassSessionController extends Controller
     {
         $this->authorizeSession($request, $classSession);
 
+        if (($classSession->isClosed() || $classSession->isExpired()) && ! $classSession->absent_processed) {
+            $this->attendanceService->finalizeSessionAttendance($classSession);
+        }
+
         $roster = $this->attendanceService->getSessionRoster($classSession);
 
         $summary = [
@@ -141,6 +147,10 @@ class ClassSessionController extends Controller
     public function updateAttendance(Request $request, ClassSession $classSession): JsonResponse
     {
         $this->authorizeSession($request, $classSession);
+
+        if (! $classSession->isActive()) {
+            return response()->json(['message' => 'Attendance cannot be changed for a finished session.'], 422);
+        }
 
         $validated = $request->validate([
             'student_id' => ['required', 'exists:students,id'],

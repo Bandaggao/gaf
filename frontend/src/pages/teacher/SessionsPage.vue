@@ -13,6 +13,8 @@ const loading = ref(false)
 const sessions = ref([])
 const classes = ref([])
 const dialog = ref(false)
+const saving = ref(false)
+const saveError = ref('')
 const formRef = ref(null)
 const form = ref({
   teaching_assignment_id: null,
@@ -44,6 +46,7 @@ async function loadData() {
 
 function openDialog() {
   form.value.teaching_assignment_id = classes.value[0]?.id ?? null
+  saveError.value = ''
   dialog.value = true
 }
 
@@ -51,13 +54,25 @@ async function save() {
   const { valid } = await formRef.value.validate()
   if (!valid) return
 
-  const { data } = await createSession(form.value)
-  dialog.value = false
-  await loadData()
+  saving.value = true
+  saveError.value = ''
 
-  const sessionId = data.data?.id ?? data.id
-  if (sessionId) {
-    router.push({ name: 'teacher-session-detail', params: { id: sessionId } })
+  try {
+    const { data } = await createSession(form.value)
+    dialog.value = false
+    await loadData()
+
+    const sessionId = data.data?.id ?? data.id
+    if (sessionId) {
+      router.push({ name: 'teacher-session-detail', params: { id: sessionId } })
+    }
+  } catch (error) {
+    const validationMessage = Object.values(error.response?.data?.errors ?? {}).flat()[0]
+    saveError.value = validationMessage
+      || error.response?.data?.message
+      || 'Unable to start the session. Please try again.'
+  } finally {
+    saving.value = false
   }
 }
 
@@ -97,8 +112,17 @@ onMounted(loadData)
       </template>
     </DataCard>
 
-    <FormDialog v-model="dialog" title="Start Class Session" save-label="Start Session" @save="save">
+    <FormDialog
+      v-model="dialog"
+      title="Start Class Session"
+      save-label="Start Session"
+      :saving="saving"
+      @save="save"
+    >
       <v-form ref="formRef">
+        <v-alert v-if="saveError" type="error" class="mb-4">
+          {{ saveError }}
+        </v-alert>
         <SearchSelect
           v-model="form.teaching_assignment_id"
           :items="classes"

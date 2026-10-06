@@ -18,19 +18,30 @@ async function startScanner() {
 
   error.value = null
   scanner = new Html5Qrcode(scannerId)
+  const scanConfig = { fps: 10, qrbox: { width: 250, height: 250 } }
+  const onDecoded = (decodedText) => emit('scan', decodedText)
 
   try {
     await scanner.start(
       { facingMode: 'environment' },
-      { fps: 10, qrbox: { width: 250, height: 250 } },
-      (decodedText) => {
-        emit('scan', decodedText)
-      },
+      scanConfig,
+      onDecoded,
       () => {},
     )
     scanning.value = true
   } catch (err) {
-    error.value = err?.message || 'Unable to start camera'
+    try {
+      const cameras = await Html5Qrcode.getCameras()
+      if (!cameras.length) throw err
+
+      await scanner.start(cameras[0].id, scanConfig, onDecoded, () => {})
+      scanning.value = true
+    } catch (fallbackError) {
+      error.value = fallbackError?.message || err?.message || 'Unable to start camera'
+    }
+  }
+
+  if (error.value) {
     emit('error', error.value)
   }
 }

@@ -32,6 +32,7 @@ const routes = [
       { path: 'assignments', name: 'admin-assignments', component: () => import('@/pages/admin/AssignmentsPage.vue') },
       { path: 'enrollments', name: 'admin-enrollments', component: () => import('@/pages/admin/EnrollmentsPage.vue') },
       { path: 'reports', name: 'admin-reports', component: () => import('@/pages/admin/ReportsPage.vue') },
+      { path: 'profile', name: 'admin-profile', component: () => import('@/pages/admin/ProfilePage.vue') },
     ],
   },
   {

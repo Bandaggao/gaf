@@ -82,13 +82,19 @@ async function handleLogout() {
       <v-list density="compact" min-width="180">
         <v-list-item :title="auth.user?.name" :subtitle="auth.user?.email" />
         <v-divider />
+        <v-list-item
+          v-if="auth.user?.role === 'admin'"
+          prepend-icon="mdi-account-edit-outline"
+          title="Profile"
+          @click="router.push({ name: 'admin-profile' })"
+        />
         <v-list-item prepend-icon="mdi-logout" title="Sign out" @click="handleLogout" />
       </v-list>
     </v-menu>
   </v-app-bar>
 
-  <v-main class="app-main">
-    <v-container fluid class="pa-4 pa-md-6">
+  <v-main class="app-main app-main--watermark">
+    <v-container fluid class="app-main__content pa-4 pa-md-6">
       <div class="app-page">
         <router-view />
       </div>
