@@ -13,7 +13,9 @@ class Student extends Model
 {
     protected function casts(): array
     {
-        return [];
+        return [
+            'daily_qr_date' => 'date',
+        ];
     }
 
     public function user(): BelongsTo

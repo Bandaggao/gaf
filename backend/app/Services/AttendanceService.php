@@ -10,7 +10,7 @@ use App\Models\GateEntry;
 use App\Models\Student;
 use App\Models\StudentEnrollment;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -58,7 +58,7 @@ class AttendanceService
 
         $student = Student::query()
             ->where('daily_qr_token', $token)
-            ->where('daily_qr_date', $today)
+            ->whereDate('daily_qr_date', $today)
             ->with('user')
             ->first();
 
@@ -68,7 +68,7 @@ class AttendanceService
 
         $existing = GateEntry::query()
             ->where('student_id', $student->id)
-            ->where('scan_date', $today)
+            ->whereDate('scan_date', $today)
             ->first();
 
         if ($existing) {
@@ -102,7 +102,7 @@ class AttendanceService
         $enrollments = StudentEnrollment::query()
             ->where('teaching_assignment_id', $session->teaching_assignment_id)
             ->with(['student.user', 'student.gateEntries' => function ($q) use ($session) {
-                $q->where('scan_date', $session->session_date->toDateString());
+                $q->whereDate('scan_date', $session->session_date->toDateString());
             }])
             ->get();
 
@@ -150,7 +150,7 @@ class AttendanceService
         $enrollments = StudentEnrollment::query()
             ->where('teaching_assignment_id', $session->teaching_assignment_id)
             ->with(['student.gateEntries' => function ($q) use ($sessionDate) {
-                $q->where('scan_date', $sessionDate);
+                $q->whereDate('scan_date', $sessionDate);
             }])
             ->get();
 

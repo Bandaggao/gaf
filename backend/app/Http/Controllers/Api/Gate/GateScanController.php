@@ -23,7 +23,7 @@ class GateScanController extends Controller
         // Find student by daily QR token (valid for today only)
         $student = Student::query()
             ->where('daily_qr_token', $token)
-            ->where('daily_qr_date', $today)
+            ->whereDate('daily_qr_date', $today)
             ->with('user')
             ->first();
 
@@ -37,7 +37,7 @@ class GateScanController extends Controller
         // Idempotent: check if already scanned today
         $existing = GateEntry::query()
             ->where('student_id', $student->id)
-            ->where('scan_date', $today)
+            ->whereDate('scan_date', $today)
             ->first();
 
         if ($existing) {
