@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\SendAttendanceEmail;
 use App\Models\AttendanceRecord;
 use App\Models\ClassSession;
 use App\Models\Student;
@@ -148,7 +149,7 @@ class ClassSessionController extends Controller
     {
         $this->authorizeSession($request, $classSession);
 
-        if (! $classSession->isActive()) {
+        if ($classSession->isExpired() && ! $classSession->isClosed()) {
             return response()->json(['message' => 'Attendance cannot be changed for a finished session.'], 422);
         }
 
@@ -167,6 +168,13 @@ class ClassSessionController extends Controller
             return response()->json(['message' => 'Student is not enrolled in this class.'], 422);
         }
 
+        $record = AttendanceRecord::query()
+            ->where('student_id', $validated['student_id'])
+            ->where('class_session_id', $classSession->id)
+            ->first();
+        $shouldNotifyAbsent = $validated['status'] === 'absent'
+            && $record?->status !== 'absent';
+
         $record = AttendanceRecord::updateOrCreate(
             [
                 'student_id' => $validated['student_id'],
@@ -177,6 +185,11 @@ class ClassSessionController extends Controller
                 'scanned_at' => $validated['status'] !== 'absent' ? now() : null,
             ]
         );
+
+        if ($shouldNotifyAbsent) {
+            $student = Student::with('user')->findOrFail($validated['student_id']);
+            SendAttendanceEmail::dispatch($student, $classSession, 'absent');
+        }
 
         return response()->json([
             'message' => 'Attendance updated.',
@@ -206,6 +219,10 @@ class ClassSessionController extends Controller
     public function destroy(Request $request, ClassSession $classSession): JsonResponse
     {
         $this->authorizeSession($request, $classSession);
+
+        if ($classSession->isActive()) {
+            return response()->json(['message' => 'Active sessions cannot be deleted.'], 422);
+        }
 
         $classSession->delete();
 

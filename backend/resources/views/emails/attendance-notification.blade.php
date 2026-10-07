@@ -22,7 +22,7 @@
         <li><strong>Subject:</strong> {{ $session->subject->name ?? 'N/A' }}</li>
         <li><strong>Section:</strong> {{ $session->section->name ?? 'N/A' }}</li>
         <li><strong>Date:</strong> {{ $session->session_date->format('F j, Y') }}</li>
-        <li><strong>Time:</strong> {{ $session->start_time }} – {{ $session->end_time }}</li>
+        <li><strong>Time:</strong> {{ \Carbon\Carbon::parse($session->start_time)->format('g:i A') }} – {{ \Carbon\Carbon::parse($session->end_time)->format('g:i A') }}</li>
     </ul>
 
     <p>

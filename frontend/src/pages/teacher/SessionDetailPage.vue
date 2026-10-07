@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { getSession, closeSession, getSessionRoster, updateAttendance } from '@/api/teacher'
+import { getSession, closeSession, deleteSession, getSessionRoster, updateAttendance } from '@/api/teacher'
 import PageHeader from '@/components/ui/PageHeader.vue'
 import StatusChip from '@/components/ui/StatusChip.vue'
 
@@ -10,6 +10,10 @@ const router = useRouter()
 const loading = ref(true)
 const rosterLoading = ref(true)
 const closing = ref(false)
+const deleting = ref(false)
+const editingAttendance = ref(false)
+const deleteDialog = ref(false)
+const deleteError = ref('')
 const session = ref(null)
 const roster = ref([])
 const rosterSummary = ref({})
@@ -18,6 +22,7 @@ const search = ref('')
 let expiryTimer = null
 
 const isActive = computed(() => session.value?.status === 'active')
+const isClosed = computed(() => Boolean(session.value?.closed_at) || session.value?.status === 'closed')
 
 const rosterHeaders = computed(() => {
   const headers = [
@@ -26,7 +31,7 @@ const rosterHeaders = computed(() => {
     { title: 'Attendance', key: 'attendance_status' },
   ]
 
-  if (isActive.value) {
+  if (isActive.value || (isClosed.value && editingAttendance.value)) {
     headers.push({ title: 'Actions', key: 'actions', sortable: false })
   }
 
@@ -93,7 +98,7 @@ async function loadRoster() {
 }
 
 async function markAttendance(student, status) {
-  if (!isActive.value) return
+  if (!isActive.value && !(isClosed.value && editingAttendance.value)) return
 
   markingStudentId.value = student.student_id
   try {
@@ -115,6 +120,19 @@ async function handleClose() {
     await loadRoster()
   } finally {
     closing.value = false
+  }
+}
+
+async function handleDelete() {
+  deleting.value = true
+  deleteError.value = ''
+  try {
+    await deleteSession(route.params.id)
+    await router.push({ name: 'teacher-sessions' })
+  } catch (error) {
+    deleteError.value = error.response?.data?.message || 'Unable to delete this session.'
+  } finally {
+    deleting.value = false
   }
 }
 
@@ -147,6 +165,32 @@ onUnmounted(() => {
           @click="handleClose"
         >
           Close Session
+        </v-btn>
+        <v-btn
+          v-if="isClosed && !editingAttendance"
+          color="primary"
+          variant="tonal"
+          prepend-icon="mdi-pencil-outline"
+          @click="editingAttendance = true"
+        >
+          Edit Attendance
+        </v-btn>
+        <v-btn
+          v-if="isClosed && editingAttendance"
+          variant="text"
+          prepend-icon="mdi-check"
+          @click="editingAttendance = false"
+        >
+          Done
+        </v-btn>
+        <v-btn
+          v-if="session && !isActive"
+          color="error"
+          variant="tonal"
+          prepend-icon="mdi-delete-outline"
+          @click="deleteDialog = true"
+        >
+          Delete Session
         </v-btn>
       </template>
     </PageHeader>
@@ -298,6 +342,23 @@ onUnmounted(() => {
       automatically set to <strong>Present</strong>. Students who did not scan at the gate will be
       set to <strong>Absent</strong>.
     </v-alert>
+
+    <v-dialog v-model="deleteDialog" max-width="440">
+      <v-card class="app-card">
+        <v-card-title class="font-weight-bold">Delete session?</v-card-title>
+        <v-card-text>
+          This will permanently remove the finished session and its attendance records.
+          <v-alert v-if="deleteError" type="error" variant="tonal" class="mt-4">
+            {{ deleteError }}
+          </v-alert>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn variant="text" :disabled="deleting" @click="deleteDialog = false">Cancel</v-btn>
+          <v-btn color="error" :loading="deleting" @click="handleDelete">Delete</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 

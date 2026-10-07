@@ -28,6 +28,10 @@ export function closeSession(id) {
   return client.post(`/teacher/sessions/${id}/close`)
 }
 
+export function deleteSession(id) {
+  return client.delete(`/teacher/sessions/${id}`)
+}
+
 export function getSessionRoster(id) {
   return client.get(`/teacher/sessions/${id}/roster`)
 }
